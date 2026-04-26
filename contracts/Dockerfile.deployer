@@ -1,0 +1,15 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy source code
+COPY . .
+
+# Run deployment via sh directly
+CMD ["sh", "-c", "echo 'Waiting for Hardhat node...' && sleep 5 && echo 'Deploying contracts...' && npm run deploy:local && echo 'Deployment completed!'"]
